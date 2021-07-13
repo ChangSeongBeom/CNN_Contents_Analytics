@@ -27,7 +27,7 @@
 #
 #     ret, image = vidcap.read()
 #     if timecount%3==0:
-#         print("무야효~")
+
 #         # print('Saved frame number : ' + str(int(vidcap.get(1))))
 #         # cv2.imwrite("C:/Users\iwsl1/yolo_object/CNN_Contents_Analytics/data/%d.jpg"%count, image)
 #
