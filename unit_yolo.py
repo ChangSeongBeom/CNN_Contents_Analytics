@@ -3,7 +3,8 @@ import numpy as np
 import os
 from dataclasses import dataclass
 from datetime import datetime
-
+import time
+import pymysql
 @dataclass
 class Item:
     object: str
@@ -48,7 +49,7 @@ for out in outs:
         scores = detection[5:]
         class_id = np.argmax(scores)
         confidence = scores[class_id]
-        if confidence > 0.5:
+        if confidence > 0.0:
             # Object detected
             center_x = int(detection[0] * width)
             center_y = int(detection[1] * height)
@@ -66,6 +67,7 @@ for out in outs:
 
 indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
 font = cv2.FONT_HERSHEY_PLAIN
+
 print(f"boxes: {boxes}")
 print(f"confidences: {confidences}")
 
@@ -82,7 +84,6 @@ for i in range(len(boxes)):
 
         itemDB.object=itemDB.object+" "+str(class_name)
         itemDB.percent=itemDB.percent + " " + str(f"{confidences[i]:.2f}")
-        itemDB.time=itemDB.time+" "+str(datetime.now())
         # hash_dict[label]+=1
 
         cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
@@ -94,4 +95,30 @@ print(itemDB)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
+tmpObject=itemDB.object.split()
+tmpObject.remove('TEST')
+tmpPercent=itemDB.percent.split()
+tmpPercent.remove('TEST')
+now = time.strftime("%Y-%m-%d %H:%M:%S")
 
+# connection 정보
+conn = pymysql.connect(
+    host = 'localhost', # host name
+    user = 'root', # user name
+    password = 'A1b2c3d4e5!', # password
+    db='developer',
+    charset = 'utf8'
+)
+cursor = conn.cursor()
+
+print(tmpObject)
+print(tmpPercent)
+for i in range(0,len(tmpObject)):
+    print(tmpObject[i])
+    print(tmpPercent[i])
+    sql = "INSERT INTO t_cmn_yolo_log VALUES (%s,%s,%s,%s)"
+    val = (1,str(tmpObject[i]),str(tmpPercent[i]),now)
+    cursor.execute(sql,val)
+
+conn.commit()
+conn.close()
