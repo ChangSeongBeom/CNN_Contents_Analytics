@@ -1,90 +1,18 @@
 import cv2
 import numpy as np
 import os
+from dataclasses import dataclass
+from datetime import datetime
+import time
+import pymysql
 
-hash_dict={
-"person":0,
-"bicycle":0,
-"car":0,
-"motorbike":0,
-"aeroplane":0,
-"bus":0,
-"train":0,
-"truck":0,
-"boat":0,
-"traffic light":0,
-"fire hydrant":0,
-"stop sign":0,
-"parking meter":0,
-"bench":0,
-"bird":0,
-"cat":0,
-"dog":0,
-"horse":0,
-"sheep":0,
-"cow":0,
-"elephant":0,
-"bear":0,
-"zebra":0,
-"giraffe":0,
-"backpack":0,
-"umbrella":0,
-"handbag":0,
-"tie":0,
-"suitcase":0,
-"frisbee":0,
-"skis":0,
-"snowboard":0,
-"sports ball":0,
-"kite":0,
-"baseball bat":0,
-"baseball glove":0,
-"skateboard":0,
-"surfboard":0,
-"tennis racket":0,
-"bottle":0,
-"wine glass":0,
-"cup":0,
-"fork":0,
-"knife":0,
-"spoon":0,
-"bowl":0,
-"banana":0,
-"apple":0,
-"sandwich":0,
-"orange":0,
-"broccoli":0,
-"carrot":0,
-"hot dog":0,
-"pizza":0,
-"donut":0,
-"cake":0,
-"chair":0,
-"sofa":0,
-"pottedplant":0,
-"bed":0,
-"diningtable":0,
-"toilet":0,
-"tvmonitor":0,
-"laptop":0,
-"mouse":0,
-"remote":0,
-"keyboard":0,
-"cell phone":0,
-"microwave":0,
-"oven":0,
-"toaster":0,
-"sink":0,
-"refrigerator":0,
-"book":0,
-"clock":0,
-"vase":0,
-"scissors":0,
-"teddy bear":0,
-"hair drier":0,
-"toothbrush":0
-}
-arr = os.listdir("C:/Users/iwsl1/yolo_object/CNN_Contents_Analytics/data")
+@dataclass
+class Item:
+    object: str
+    percent: str
+    time : str
+arr = os.listdir("C:/Users/iwsl1/CNN_Contents_Analytics/data")
+itemDB=Item("TEST","TEST",str(datetime.now()))
 
 print(arr)
 
@@ -101,7 +29,7 @@ for i in range(0,len(arr)):
 
     # Loading image
     # img = cv2.imread("C:/Users/iwsl1/yolo_object/CNN_Contents_Analytics/data/frame420.jpg")
-    img = cv2.imread("C:/Users/iwsl1/yolo_object/CNN_Contents_Analytics/data/"+substr)
+    img = cv2.imread("C:/Users/iwsl1/CNN_Contents_Analytics/data/"+substr)
     img = cv2.resize(img, None, fx=0.4, fy=0.4)
     height, width, channels = img.shape
 
@@ -142,15 +70,52 @@ for i in range(0,len(arr)):
     for i in range(len(boxes)):
         if i in indexes:
             x, y, w, h = boxes[i]
-            label = str(classes[class_ids[i]])
-            hash_dict[label]+=1
-            print(label)
+            class_name = classes[class_ids[i]]
+            label = f"{class_name} {confidences[i]:.2f}"
+
+            print(class_name)
+            print(f"{confidences[i]:.2f}")
+
+            itemDB.object = itemDB.object + " " + str(class_name)
+            itemDB.percent = itemDB.percent + " " + str(f"{confidences[i]:.2f}")
+
             color = colors[class_ids[i]]
             cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
             cv2.putText(img, label, (x, y + 30), font, 3, color, 3)
 
 
 cv2.imshow("Image", img)
-print(hash_dict)
+
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+tmpObject=itemDB.object.split()
+tmpObject.remove('TEST')
+
+tmpPercent=itemDB.percent.split()
+tmpPercent.remove('TEST')
+
+now = time.strftime("%Y-%m-%d %H:%M:%S")
+
+# connection 정보
+conn = pymysql.connect(
+    host = 'localhost', # host name
+    user = 'root', # user name
+    password = 'A1b2c3d4e5!', # password
+    db='developer',
+    charset = 'utf8'
+)
+cursor = conn.cursor()
+
+print(tmpObject)
+print(tmpPercent)
+for i in range(0,len(tmpObject)):
+    print(tmpObject[i])
+    print(tmpPercent[i])
+    sql = "INSERT INTO t_cmn_yolo_log VALUES (%s,%s,%s,%s)"
+    val = (1,str(tmpObject[i]),str(tmpPercent[i]),now)
+    cursor.execute(sql,val)
+
+conn.commit()
+conn.close()

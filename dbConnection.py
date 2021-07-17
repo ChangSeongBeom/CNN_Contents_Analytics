@@ -16,7 +16,7 @@ cursor.execute(sql)
 res = cursor.fetchall()
 
 for data in res:
-        print(data) 
+        print(data)
 
 conn.commit()
 conn.close()
