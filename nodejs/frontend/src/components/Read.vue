@@ -8,9 +8,11 @@
        <a>STT</a>
    </div>
 
+<!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
 
-
-     <div id="divid" v-for="user in users">{{user.contents}}<img width="500px":src="user.img_url"></div>
+     <div id="divid" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} 
+     <img width="500px":src="user.img_url"></div>
+     
 
    </div>
 </template>
@@ -28,7 +30,7 @@ export default{
     },
    created(){
        var vm=this;
-       axios.get('http://localhost:3000/main')
+       axios.get('http://localhost:3000/view')
        .then(function(response){
            console.log(response)
            vm.users=response.data
@@ -36,7 +38,26 @@ export default{
        .catch(function(){
             
        })
+   },
+   methods:{
+   detailview(id){
+       console.log(id);
+       this.$router.push({
+           name: 'Detailview'
+           ,params:{
+               contentid:id
+            }
+       })
    }
+   }
+//    },
+//    methods:{
+//      fnView(id) {
+// 			this.body.id = id;
+//             alert(id);
+// 			this.$router.push({path:'./view',query:this.body}); //추가한 상세페이지 라우터
+// 	}
+// }
 }
 </script>
 <style scoped>

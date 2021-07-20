@@ -42,10 +42,27 @@ app.get('/users', (req, res) => {
   });
 });
 
-app.get('/main', (req, res) => {
+app.get('/view', (req, res) => {
   connection.query('SELECT * FROM  (select A.ID,A.object,A.LOGTIME,B.contents,B.img_url FROM t_cmn_yolo_log as A INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID) C GROUP BY C.ID;', (error, rows) => {
     if (error) throw error;
     console.log('User info is: ', rows);
+    res.send(rows);
+  });
+});
+
+app.get('/detailview/:id', (req, res) => {
+  var id=req.params.id;
+  connection.query('select A.id,A.object,A.percent,A.LOGTIME,B.contents FROM t_cmn_yolo_log as A INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID WHERE A.ID=?',id, (error, rows) => {
+    if (error) throw error;
+    console.log('User info is: ', rows);
+
+    var percentageValue=0;
+    var percentageSum=0;
+
+    for (var i = 0; i < rows.length; i++) {
+      percentageSum+=parseFloat(rows[i].percent);
+  }
+    percentageValue=percentageSum/rows.length;
     res.send(rows);
   });
 });
