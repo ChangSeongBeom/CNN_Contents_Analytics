@@ -42,6 +42,15 @@ app.get('/users', (req, res) => {
   });
 });
 
+app.get('/main', (req, res) => {
+  connection.query('SELECT * FROM  (select A.ID,A.object,A.LOGTIME,B.contents,B.img_url FROM t_cmn_yolo_log as A INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID) C GROUP BY C.ID;', (error, rows) => {
+    if (error) throw error;
+    console.log('User info is: ', rows);
+    res.send(rows);
+  });
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
