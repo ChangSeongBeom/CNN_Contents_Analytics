@@ -10,7 +10,7 @@
 
 <!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
 
-     <div id="divid" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} 
+     <div id="divid" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} </br>
      <img width="500px":src="user.img_url"></div>
      
 
