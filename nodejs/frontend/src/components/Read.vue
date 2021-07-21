@@ -78,7 +78,7 @@ background-size: 150px;
 }
 #divid{
     font-size:30px;
-    color: white;
+    color: black;
     
 }
 
