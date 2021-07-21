@@ -2,19 +2,18 @@
    
 
    <div>
-       <div class="menu">
-       <a>욜로로그 분석</a>
-       <a>자막(OCR)</a>
-       <a>STT</a>
-   </div>
-
+       
+  
 <!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
-
+    <div class="circular" v-bind:style="{ backgroundImage: 'http://www.hmgprime.com/cmm/fms/3913/2/getImage.do' }"></div>
      <div id="divid" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} </br>
+   
      <img width="500px":src="user.img_url"></div>
      
 
-   </div>
+  
+    </div>
+
 </template>
 
 <script>
@@ -60,18 +59,27 @@ export default{
 // }
 }
 </script>
-<style scoped>
+<style>
+body{
+/*     
+background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.jpg') !important;
+background-size: 150px;
+  width: 300px;
+  height: 300px; */
+}
 .menu{
     background: darkslateblue;
     padding: 15px;
     border-radius: 5px;
 }
 .menu a{
-    color: white;
+    color: white !important;
     padding: 10px;
 }
 #divid{
     font-size:30px;
+    color: white;
+    
 }
 
 </style>
