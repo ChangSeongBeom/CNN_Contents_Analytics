@@ -1,25 +1,50 @@
 <template>
-	<div>
-		<h1>게시판 상세보기</h1>
-
-		<div class="AddWrap">
-			<form>
-				<table class="tbAdd">
-					<colgroup>
-						<col width="15%" />
-						<col width="*" />
-					</colgroup>
-					<tr>
-						<th>제목</th>
-						<td>{{subject}}</td>
-					</tr>
-					<tr>
-						<th>내용</th>
-						<td class="txt_cont" v-html="cont"></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-
-	</div>
+	
 </template>
+
+
+<script>
+import axios from 'axios';
+export default{
+	created(){
+            var vm=this;
+            axios.get("http://localhost:3000/detailview/"+"1")
+             .then(function(response){
+				 
+           vm.lists=response.data
+
+       })
+             .catch(function(){
+                alert(error)
+            })
+        },
+		data(){
+        return{
+
+            lists : []
+        }
+    },
+	//data(){
+		// console.log(lists);
+	
+	// 	return{
+			
+	// 		labels:arr,
+	// 	datasets: [
+	// 		{
+				
+	// 			data:[20,30,40],
+	// 			backgroundColor:["Red","Yellow","Purple"]
+	// 		}
+	// 	],
+	// 	option :{
+	// 		title:{
+	// 			display:true,
+	// 			position:"bottom",
+	// 			text:"Fruits"
+	// 		}
+	// 	}	
+	// }
+	//}
+}
+</script>

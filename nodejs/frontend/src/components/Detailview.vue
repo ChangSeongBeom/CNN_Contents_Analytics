@@ -4,7 +4,7 @@
     <div>
         <div>sadfsfa </div>
       <div id="baa" v-for="list in lists" >사물명{{list.object}}탐지개수{{list.cnt}}정확도{{list.avgpercent}} </br>
-  
+    
     </div>   
 </template>
 
@@ -15,7 +15,7 @@ export default {
     name:'Detailview',
     computed: {
         param() {
-            
+             
             return this.$route.params.contentid;
         }
     },
