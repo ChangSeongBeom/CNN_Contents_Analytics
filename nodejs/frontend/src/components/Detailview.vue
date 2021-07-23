@@ -3,7 +3,7 @@
 <!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
 
         <div>
-      
+        
         <iframe width="40%" height="315" :src=lists[0].frame_url title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/-1fcHvqacQs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
         <div><b-table striped hover :items="lists" :fields="fields"></b-table></div>

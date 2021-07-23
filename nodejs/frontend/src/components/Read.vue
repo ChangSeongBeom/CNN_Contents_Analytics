@@ -107,7 +107,7 @@ background-size: 150px;
   }
   tr td{
       font-size:22px;
-      background-color: #d5e6f7;
+      background-color: #f7f7f7;
           border: 1px solid #444444;
         
 
