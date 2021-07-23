@@ -1,25 +1,28 @@
 <template>
    
        
-      <table>
+      <table >
+        
             <thead>
                 <tr>
-                    <th>아이디값</th>
-                    <th>이름</th>
-                    <th>썸네일</th>
-                    <th>로그수집날짜</th>
+                    <th width="15%">아이디값</th>
+                    <th width="25%">이름</th>
+                    <th width="40%">썸네일</th>
+                    <th width="20%">로그수집날짜</th>
 
                 </tr>
-            </thead>
+            </thead>    
             <tbody id="contacts">
-                <tr v-for="user in users"  @click="detailview(user.ID)">
-                    <td>{{user.ID}}</td>
+                <tr v-for="user in users" @click="detailview(user.ID)" :per-page="perPage" :current-page="currentPage" >
+                    <td >{{user.ID}}</td>
                     <td>{{user.contents}}</td>
-                    <td width=35%> <img width="100%":src="user.img_url"></td>
+                    <td width=35%> <img width="100%" height=340px :src="user.img_url"></td>
                     <td> {{user.LOGTIME}}</td>
                 </tr>
             </tbody>
+   
         </table>
+        
 <!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
 <!--     {{user.contents}}<div id="onerow" v-for="user in users" @click="detailview(user.ID)"> {{user.ID}} </br>
    
@@ -37,7 +40,8 @@ export default{
     name:'Read',
     data(){
         return{
-        
+            currentPage:1,
+            perPage:3,
             users: []
         }
     },
@@ -61,7 +65,12 @@ export default{
                contentid:id
             }
        })
-   }
+   },
+   },
+   computed: {
+       rows(){
+           return this.users.length
+       }
    }
 //    },
 //    methods:{

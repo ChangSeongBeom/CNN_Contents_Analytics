@@ -3,9 +3,9 @@
   <h1>Hyundai Autoever EDU WG RnD</h1>
   <nav>
     <ul>
-      <li><a href="#" router-link class="menu" to="/"> 1</a></li>
-      <li><a href="#" router-link class="menu" to="/">메뉴 2</a></li>
-      <li><a href="#" router-link class="menu" to="/">메뉴 3</a></li>
+      <li><router-link class="menu" to="/">CNN</a></li>
+      <li><router-link class="menu" to="/OCR">OCR</a></li>
+      <li><router-link class="menu" to="/STT">STT</a></li>
     </ul>
   </nav>
   </header>
@@ -62,7 +62,8 @@ a {
   text-decoration: none;
   font-weight: bold;
   color: white;
-  background: teal;
+  background-color: white;
+
 }
 
 a:hover {
@@ -75,5 +76,15 @@ html {
 
 *, *:before, *:after {
   box-sizing: inherit;
+}
+#app > header > nav > ul > li:nth-child(1) > a{
+  color:white;
+}
+#app > header > nav > ul > li:nth-child(2) > a{
+    color:white;
+
+}
+#app > header > nav > ul > li:nth-child(3) > a{
+  color:white;
 }
 </style>

@@ -2,18 +2,21 @@
   <div id="app">
     <Header />
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
-import Read from './components/Read.vue'
+import Footer from './components/Footer.vue'
 import Detailview from './components/Detailview.vue'
 
 export default {
   name: 'App',
   components:{
     Header,
+    Footer,
+
   }
 }
 </script>
@@ -24,7 +27,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+
 
 }
 </style>
