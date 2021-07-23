@@ -43,7 +43,7 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/view', (req, res) => {
-  connection.query('SELECT * FROM  (select A.ID,A.object,A.LOGTIME,B.contents,B.img_url FROM t_cmn_yolo_log as A INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID) C GROUP BY C.ID;', (error, rows) => {
+  connection.query('SELECT * FROM  (select A.ID,A.object,A.LOGTIME,B.contents,B.img_url FROM t_cmn_yolo_log as A INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID) C GROUP BY C.ID ORDER BY C.ID ASC;', (error, rows) => {
     if (error) throw error;
     console.log('User info is: ', rows);
     res.send(rows);
@@ -52,7 +52,7 @@ app.get('/view', (req, res) => {
 
 app.get('/detailview/:id', (req, res) => {
   var id=req.params.id;
-  connection.query('SELECT C.object,COUNT(*) as cnt,C.contents,ROUND(AVG(C.percent),2)*100 AS avgpercent FROM  (select A.id,A.object,A.percent,A.LOGTIME,B.contents FROM t_cmn_yolo_log as A  INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID)C WHERE C.ID=? GROUP BY C.object;',id, (error, rows) => {
+  connection.query('SELECT *FROM (SELECT C.object,COUNT(*) as cnt,C.contents,C.frame_url,ROUND(AVG(C.percent),2)*100 AS avgpercent FROM  (select A.id,A.object,A.percent,A.LOGTIME,B.contents,B.frame_url FROM t_cmn_yolo_log as A  INNER JOIN t_cmn_cotn_mst as B ON A.ID=B.ID)C WHERE C.ID=? GROUP BY C.object)D ORDER BY D.cnt DESC;',id, (error, rows) => {
     if (error) throw error;
     console.log('User info is: ', rows);
 

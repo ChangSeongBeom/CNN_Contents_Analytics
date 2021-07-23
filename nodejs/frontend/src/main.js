@@ -9,11 +9,10 @@ import 'vue-css-donut-chart/dist/vcdonut.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import BootstrapVue from 'bootstrap-vue';
 import "chart.js";
 import "hchs-vue-charts";
 
-import { BIconArrowUpLeft, BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(Donut);
 Vue.use(window.VueCharts);
 Vue.use(BootstrapVue)

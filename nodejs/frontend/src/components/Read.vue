@@ -1,18 +1,32 @@
 <template>
    
-
-   <div>
        
-  
+      <table>
+            <thead>
+                <tr>
+                    <th>아이디값</th>
+                    <th>이름</th>
+                    <th>썸네일</th>
+                    <th>로그수집날짜</th>
+
+                </tr>
+            </thead>
+            <tbody id="contacts">
+                <tr v-for="user in users"  @click="detailview(user.ID)">
+                    <td>{{user.ID}}</td>
+                    <td>{{user.contents}}</td>
+                    <td width=35%> <img width="100%":src="user.img_url"></td>
+                    <td> {{user.LOGTIME}}</td>
+                </tr>
+            </tbody>
+        </table>
 <!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
-    <div class="circular" v-bind:style="{ backgroundImage: 'http://www.hmgprime.com/cmm/fms/3913/2/getImage.do' }"></div>
-     <div id="onerow" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} </br>
+<!--     {{user.contents}}<div id="onerow" v-for="user in users" @click="detailview(user.ID)"> {{user.ID}} </br>
    
-     <img width="500px":src="user.img_url"></div>
+     <img width="500px":src="user.img_url"></div>-->
      
 
   
-    </div>
 
 </template>
 
@@ -79,7 +93,24 @@ background-size: 150px;
 #onerow{
     font-size:30px;
     color: black;
-     outline: 5px solid blue;
+     outline: 3px solid black;
 }
+ table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  tr th {
+    
+    background-color: #e6f1ff;
+    border: 1px solid #444444;
+  }
+  tr td{
+      font-size:22px;
+      background-color: #d5e6f7;
+          border: 1px solid #444444;
+        
+
+  }
 
 </style>
