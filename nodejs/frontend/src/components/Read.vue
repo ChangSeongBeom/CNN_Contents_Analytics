@@ -6,7 +6,7 @@
   
 <!--a href="javascript:;" @click="fnView(`${user.id}`)">-->
     <div class="circular" v-bind:style="{ backgroundImage: 'http://www.hmgprime.com/cmm/fms/3913/2/getImage.do' }"></div>
-     <div id="divid" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} </br>
+     <div id="onerow" v-for="user in users" @click="detailview(user.ID)">{{user.contents}} {{user.ID}} </br>
    
      <img width="500px":src="user.img_url"></div>
      
@@ -76,10 +76,10 @@ background-size: 150px;
     color: white !important;
     padding: 10px;
 }
-#divid{
+#onerow{
     font-size:30px;
     color: black;
-    
+     outline: 5px solid blue;
 }
 
 </style>
