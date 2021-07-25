@@ -3,10 +3,19 @@ import numpy as np
 import cv2
 import random
 import matplotlib.pyplot as plt
+import os
 from PIL import ImageFont, ImageDraw, Image
-
+import natsort
 beforeResult=[]
 textResult=[]
+
+tmpResult=[]
+
+arr = os.listdir("C:/Users/iwsl1/CNN_Contents_Analytics/data/olim/")
+arr=natsort.natsorted(arr)
+
+for i in range(0,len(arr.length)):
+
 
 
 img = cv2.imread("C:/Users/iwsl1/CNN_Contents_Analytics/tesa.JPG")
@@ -34,8 +43,9 @@ for i in range(0,len(result)):
     print(result[i][1])
     textResult.append(str(result[i][1]))
 
+#원본
 print(beforeResult)
+
+#자막 부분만 자른부분
 print(textResult)
 
-cv2.imshow('sdf,',img)
-cv2.waitKey(0)
