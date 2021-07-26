@@ -1,3 +1,6 @@
+#-*- coding: utf-8 -*-
+import Levenshtein as lev
+from collections import deque
 import easyocr
 import numpy as np
 import cv2
@@ -11,7 +14,7 @@ textParseResult=[]
 
 tmpResult=[]
 
-arr = os.listdir("C:/Users/iwsl1/CNN_Contents_Analytics/data/mask/")
+arr = os.listdir("C:/Users/iwsl1/CNN_Contents_Analytics/data/vaccine/")
 arr=natsort.natsorted(arr)
 
 
@@ -19,8 +22,8 @@ for i in range(0,len(arr)):
     textResult = []
     tmpPath=arr[i]
     print(tmpPath)
-    img = cv2.imread("C:/Users/iwsl1/CNN_Contents_Analytics/data/mask/"+tmpPath)
-    im=Image.open("C:/Users/iwsl1/CNN_Contents_Analytics/data/mask/"+tmpPath)
+    img = cv2.imread("C:/Users/iwsl1/CNN_Contents_Analytics/data/vaccine/"+tmpPath)
+    im=Image.open("C:/Users/iwsl1/CNN_Contents_Analytics/data/vaccine/"+tmpPath)
 
     w,h=im.size
     tmph=(int)(h*0.75)
@@ -28,7 +31,7 @@ for i in range(0,len(arr)):
 
 
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    result = reader.readtext("C:/Users/iwsl1/CNN_Contents_Analytics/data/mask/"+tmpPath)
+    result = reader.readtext("C:/Users/iwsl1/CNN_Contents_Analytics/data/vaccine/"+tmpPath)
 
     # for i in range(0,len(result)):
     #     if result[i]
@@ -55,3 +58,22 @@ print(beforeResult)
 #자막 부분만 자른부분
 print(textParseResult)
 
+
+d=deque()
+
+for i in range(0,len(textParseResult)):
+    if(len(textParseResult[i])<5):
+        textParseResult[i]=textParseResult[i].replace(textParseResult[i],'')
+
+test=list(filter(None,textParseResult))
+
+d.append(test[0])
+
+for i in range(1,len(test)):
+    tmp=d[len(d)-1]
+    if lev.ratio(tmp,test[i])<0.8:
+        d.append(test[i])
+
+
+for elem in d:
+    print(elem.upper())
